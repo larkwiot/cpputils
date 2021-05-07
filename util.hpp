@@ -38,10 +38,7 @@ std::string join(std::vector<std::string> const& vec) {
   return result;
 }
 
-template <typename T>
-concept Byteable = std::unsigned_integral<T>;
-
-template <Byteable T>
+template <std::unsigned_integral T>
 std::vector<u_char> num_to_bytes(T n) {
   auto x = n;
   std::vector<u_char> result {};
