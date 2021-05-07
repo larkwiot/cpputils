@@ -25,10 +25,10 @@ int main() {
     std::vector<u_char> test_byte1_res2 {0, 0, 0xff, 0};
     std::vector<u_char> test_byte1_res3 {0, 0xff, 0, 0};
     std::vector<u_char> test_byte1_res4 {0xff, 0, 0, 0};
-    expect(lt::num_to_bytes<0xffu>() == test_byte1_res1);
-    expect(lt::num_to_bytes<0xff00u>() == test_byte1_res2);
-    expect(lt::num_to_bytes<0xff0000u>() == test_byte1_res3);
-    expect(lt::num_to_bytes<0xff000000u>() == test_byte1_res4);
+    expect(lt::num_to_bytes(0xffu) == test_byte1_res1);
+    expect(lt::num_to_bytes(0xff00u) == test_byte1_res2);
+    expect(lt::num_to_bytes(0xff0000u) == test_byte1_res3);
+    expect(lt::num_to_bytes(0xff000000u) == test_byte1_res4);
   };
 
   "read_file_bytes"_test = [] {
