@@ -4,8 +4,8 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-#include <cstddef>
 #include <sstream>
+#include "lib/ut.hpp"
 
 #ifndef LTSTAFFEL_UTIL_HPP
 #define LTSTAFFEL_UTIL_HPP
@@ -52,14 +52,10 @@ std::vector<u_char> num_to_bytes(T n) {
   return result;
 }
 
-// read file bytes
 std::vector<u_char> read_file_bytes(std::string& fn) {
   std::ifstream fh {fn, std::ios::binary | std::ios::ate};
 
-  if (!fh) {
-    std::cerr << "[!] error: could not open " << fn << "\n";
-    abort();
-  }
+  boost::ut::expect(!fh == false) << "could not open file:" << fn;
 
   auto end = fh.tellg();
   fh.seekg(0, std::ios::beg);
@@ -72,10 +68,7 @@ std::vector<u_char> read_file_bytes(std::string& fn) {
 
   std::vector<u_char> bytes(size);
 
-  if (!fh.read(reinterpret_cast<char*>(bytes.data()), bytes.size())) {
-    std::cerr << "[!] error: could not read " << fn << "\n";
-    abort();
-  }
+  boost::ut::expect(!fh.read(reinterpret_cast<char*>(bytes.data()), bytes.size()) == false) << "could not read file:" << fn;
 
   return bytes;
 }
@@ -83,10 +76,7 @@ std::vector<u_char> read_file_bytes(std::string& fn) {
 std::vector<std::string> read_file_lines(std::string& fn) {
   std::ifstream fh {fn};
 
-  if (!fh) {
-    std::cerr << "[!] error: could not open " << fn << "\n";
-    abort();
-  }
+  boost::ut::expect(!fh == false) << "could not open file:" << fn;
 
   std::vector<std::string> lines {};
 

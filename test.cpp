@@ -1,5 +1,4 @@
 #include "util.hpp"
-#include "lib/ut.hpp"
 
 using namespace boost::ut;
 
