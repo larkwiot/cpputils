@@ -41,4 +41,33 @@ int main() {
     std::string test_file1 = "test_file.txt";
     expect(lt::read_file_lines(test_file1) == test_file_res1);
   };
+
+  "gcd"_test = [] {
+    expect(lt::gcd(1, 2) == 1);
+    expect(lt::gcd(1234*5, 1234) == 1234);
+  };
+
+  "prime_factors"_test = [] {
+    std::vector<int> test_factors_primes1 {2, 3};
+    std::vector<bool> test_factors_primes2 {true, false, false};
+    std::unordered_map<int, int> test_factors_res1 {
+      {2, 2}
+    };
+    std::unordered_map<int, int> test_factors_res2 {
+      {2, 2},
+      {3, 1}
+    };
+    
+    expect(lt::prime_factors(4, test_factors_primes1) == test_factors_res1);
+    expect(lt::prime_factors(12, test_factors_primes1) == test_factors_res2);
+    expect(lt::prime_factors(4, test_factors_primes2) == test_factors_res1);
+    expect(lt::prime_factors(12, test_factors_primes2) == test_factors_res2);
+  };
+
+  "is_prime"_test = [] {
+    expect(lt::is_prime(13) == true);
+    expect(lt::is_prime(14) == false);
+    expect(lt::is_prime(1487) == true);
+    expect(lt::is_prime(10) == false);
+  };
 }
