@@ -207,6 +207,86 @@ bool is_prime(T n) {
   return true;
 }
 
+// graph //////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+class AdjacencyList {
+  std::unordered_map<T*, std::vector<T*>> g;
+
+ public:
+  ~AdjacencyList() {
+    for (auto pair : this->g) {
+      delete pair.first;
+    }
+
+    return;
+  }
+
+  void add_vertex(T* vx) {
+    this->g.emplace(vx, std::vector<T*>{});
+    return;
+  }
+
+  void remove_vertex(T* vx) {
+    this->g.erase(vx);
+
+    for (auto pair : this->g) {
+      auto end = pair.second.end();
+      for (auto neighbor = pair.second.begin(); neighbor != end; ++neighbor) {
+        if (*neighbor == vx) {
+          pair.second.erase(neighbor);
+          this->g.at(pair.first) = pair.second;
+          break;
+        }
+      }
+    }
+
+    delete vx;
+
+    return;
+  }
+
+  void add_edge(T* va, T* vb) {
+    this->g.at(va).emplace_back(vb);
+    return;
+  }
+
+  void remove_edge(T* va, T* vb) {
+    auto end = this->g.at(va).end();
+    for (auto vi = this->g.at(va).begin(); vi != end; ++vi) {
+      if (*vi == vb) {
+        this->g.at(va).erase(vi);
+        return;
+      }
+    }
+
+    throw std::out_of_range("adjacent vertex not found");
+  }
+
+  auto get_graph() {
+    return this->g;
+  }
+
+  void print_graph() {
+    for (auto p : this->g) {
+      if (p.second.size() == 0) {
+        std::cout << p.first << " -> []\n";
+        return;
+      }
+
+      std::cout << p.first << " -> [" << p.second.front();
+      auto end = p.second.end();
+      for (auto e = p.second.begin() + 1; e != end; ++e) {
+        std::cout << ", " << *e;
+      }
+      std::cout << "]\n";
+    }
+
+    return;
+  }
+};
+
 }
 
 #endif
